@@ -16,12 +16,22 @@ if(isset($_POST["search"])){
 //Sanitizing the search
 $search = $conn -> real_escape_string($_POST["search"]);
 
-$where .= "WHERE r.name LIKE '%$search%' OR c.name LIKE '%$search%' OR r.cookingtime LIKE '%$search%' OR r.url LIKE '%$search%'";
+//Storing the search in a session
+$_SESSION['search'] = $search;
+//Setting the focus
+$_SESSION['focus'] = ""; 
+
+$where .= "WHERE r.name LIKE '%$search' OR c.name LIKE '%$search' OR r.cookingtime LIKE '%$search' OR r.url LIKE '%$search'";
 
 $sql = "";
 $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";
 //If there is no search
 } else {
+    //If there is a session search
+    $_SESSION['search'] = "";
+    //Setting the focus
+    $_SESSION['focus'] = "autofocus";         
+
     $sql = "";
     $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";    
 }
@@ -38,7 +48,18 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
     unset($_SESSION['message_alert'], $_SESSION['message']);
     }
 ?>
+
+<!--Form for filtering the recipes-->
+<div class="row mt-2 g-2 justify-content-center">
+        <div class="col-auto">
+            <form action="" method="POST" class="input-group mb-3">
+                <input class="form-control" type="text" value="<?php echo $_SESSION['search']; ?>" id="search" name="search" maxlength="300" <?php echo $_SESSION["focus"];?>> 
+                <input type="submit" class="btn btn-primary" value="Buscar">
+            </form>
+        </div>
+    </div>
 <!-- Table to show the recipes-->
+
 <?php
     //Counting the recipes  
     $result = $conn -> query($sql);
@@ -47,16 +68,6 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
         echo "<div class='alert alert-warning text-center' role='alert'>No hay recetas disponibles.</div>";
     } else {
 ?>
-    <!--Form for filtering the recipes-->
-    <div class="row mt-2 g-2 justify-content-center">
-        <div class="col-auto">
-            <form action="" method="POST" class="input-group mb-3">
-                <input class="form-control" type="text" id="search" name="search" maxlength="100" autofocus> 
-                <input type="submit" class="btn btn-primary" value="Buscar">
-            </form>
-        </div>
-    </div>
-
     <div class="table-responsive-sm mt-4">
         <table class="table table-condensed shadow">
             <thead>
