@@ -26,8 +26,17 @@ if(isset($_POST["recipename"]) && isset($_POST["url"]) && isset($_POST['category
   $ingredients = $filter -> sanitization();
 
   $categoryId = $_POST['category']; 
-  $Url = $_POST["url"];  
+  $Url = $_POST["url"]; 
 
+  //Getting the category name
+  $categoryName = new FromIdToName($categoryId, "categories");
+  $categoryName = $categoryName -> name();
+
+  //Storing the category name and id in a session
+  $_SESSION['categoryName'] = $categoryName;
+  $_SESSION['categoryId'] = $categoryId;
+
+  //Verifying if it already exists
   $result = $conn -> query("SELECT name FROM recipe WHERE name = '$recipename';");
   $num_rows = $result -> num_rows;
 //Check if the recipe exists            

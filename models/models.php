@@ -151,4 +151,30 @@ class InputValidation {
         return $message;   
     }
 }
+
+//Get the name from the id
+class FromIdToName {
+    public $id;
+    public $table;
+
+    function __construct($id, $table){
+        $this -> id = $id;
+        $this -> table = $table;
+    }
+    //Get the name
+    private function getName() {
+        $conn = DatabaseConnection::dbConnection();
+        $sql = "SELECT name FROM " . $this -> table . " WHERE id = '" . $this -> id ."';";
+   
+        return $conn -> query($sql);
+    }
+
+    private function getRow() {
+        return $this -> getName() -> fetch_assoc();
+    }
+
+    public function name() {
+        return $this -> getRow()['name'];
+    }
+}
 ?>

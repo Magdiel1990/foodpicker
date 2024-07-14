@@ -47,9 +47,17 @@ require_once ("views/partials/nav.php");
                     <label class="input-group-text" for="category">Categoría: </label>                
                     <select class="form-select" name="category" id="category">
                         <?php
+                        //Checking if the session is set
+                        if(isset($_SESSION['categoryName']) && isset($_SESSION['categoryId'])) {
+                            $where = "WHERE id <> '" . $_SESSION['categoryId'] . "'";
+                        //Displaying first category
+                            echo '<option value="' . $_SESSION['categoryId'] . '">' . $_SESSION['categoryName'] .'</option>';
+                        } else {
+                        //If the session is not set
+                            $where = "";
+                        }
                         //Getting the categories
-                            echo '<option value=""></option>';
-                            $result = $conn -> query("SELECT * FROM categories;"); 
+                            $result = $conn -> query("SELECT * FROM categories $where;"); 
                             if($result -> num_rows > 0) {
                                 while($row = $result -> fetch_assoc()) {
                                     echo '<option value="' . $row["id"] . '">' . ucfirst($row["name"]) . '</option>';
