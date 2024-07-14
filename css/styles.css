@@ -1,0 +1,325 @@
+/*General format*/
+* {
+    font-family:'Times New Roman', Times, serif;
+}
+
+a, td, p, li, th {
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+p, li {
+    color: #222; 
+}
+
+/*Titles formats*/
+h2 {
+    color: #fff;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #444;
+    font-weight: bold;
+}
+
+/*Header, footer and main format*/
+header, footer {
+    background: rgb(71, 216, 241);
+    background: linear-gradient(39deg, rgba(243,255,42,0.6) 0%, rgba(71, 216, 241,1) 28%); 
+}
+
+main {
+    min-height: calc(100vh - 8rem);
+}
+
+footer {
+    height: 8rem;
+}
+
+footer h5 {
+    font-size: 1rem;
+}
+
+.fa-linkedin, .fa-github, .fa-instagram, .fa-facebook-f {
+    transition: font-size linear 0.2s;
+}
+.fa-linkedin:hover, .fa-github:hover, .fa-instagram:hover, .fa-facebook-f:hover {
+    font-size: 2rem;
+}
+
+/*Nav format*/
+
+.navbar-toggler{
+    color: white;
+}
+
+#logo, #profile {
+    position: relative;
+    height: 2rem;
+    border-radius: 20%;
+}
+
+#logo:hover {
+    height: 2.3rem;
+    box-shadow: 1px 1px 16px -4px rgb(223, 73, 73);
+}
+
+#profile {
+    max-width: 30%;
+    object-fit:fill;
+}
+
+#profile:hover {
+    max-width: 22%;
+    object-fit:cover;
+}
+
+.logo {
+    position: relative;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo a {
+    position: relative;
+    right: 8px;
+}
+
+.navbar-nav {
+    position: relative;  
+    left: 1.5rem;         
+}
+
+.navbar-collapse .nav-item, .navbar-collapse .dropdown-item {    
+    transition: background ease-out 0.1s, font-size ease-out 0.1s, border ease-out 0.1s;
+}
+
+.navbar-collapse .nav-item:hover, .navbar-collapse .dropdown-item:hover {
+    font-size: 18px;
+    background: rgba(83, 244, 104, 0.12); 
+    border: 1px dotted rgba(0, 0, 255, 0.3);  
+}
+
+#counter i:hover {
+    color: #444;
+}
+
+#navbarNavDropdown {
+    position: inherit;
+    right: 1rem;
+}
+
+.nav-item {
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-weight: bolder;
+}
+
+.dropdown-item {
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+#username {
+    font-weight: bolder;
+}
+
+#username:hover {
+    font-size: 1.2rem;
+}
+
+.logout {
+    font-size: 1.1rem;
+    transition: color ease-in 0.5s, font-size ease-out 0.5s;
+}
+
+.logout i:hover {
+    color: #444;
+    font-size: 1.3rem;
+}
+
+.fa-envelope {
+    font-size: 1.6rem;
+}
+
+/*Tables*/
+thead {
+    background-color:#444444;
+}
+
+.table_header {
+    font-size: 1.4rem;
+    color:#ffffff;
+    background-color: rgb(71, 216, 241);
+    transition: color ease-out 0.5s, background-color ease-in 0.3s;    
+}
+
+.table_header:hover {
+    color: rgb(71, 216, 241);
+    background-color:rgb(255, 246, 234);
+}
+
+tbody {
+    background-color:rgb(255, 246, 234);
+}
+
+#tlink, .diet-elements td a, td a {
+    color: #222;
+    transition: font-size ease-out 0.2s;
+}
+
+#tlink:hover, .diet-elements td a:hover {
+    font-size: 2rem;
+}
+
+.diet-elements td:hover {
+    background-color: #525151;
+}
+
+.diet-elements td a:hover {
+    color: #ffffff;    
+}
+
+/*Form format*/
+label, select, input, option {
+    font-size: 1.2rem;
+}
+
+select {
+    transition: box-shadow ease-out 0.5s;
+}
+
+select:hover {
+    box-shadow: 1px 1px 5px rgb(240, 144, 41);
+}
+
+option {
+    color: rgb(240, 144, 41);
+}
+
+.form, .recovery-form {
+    background-color:rgb(255, 249, 241);
+    box-shadow: 1px 1px 8px 1px #888;
+    padding: 1.5rem;
+}
+
+.form ul li {
+    list-style: none;
+    font-size: 1.2rem;
+}
+/*Custom*/
+
+.click-del-link {
+    color: black;
+    transition: color ease-out 0.3s;
+}
+  
+.click-del-link:hover {
+    font-size: 2rem;
+    color:rgb(249, 43, 43);
+}
+.custom-list {
+    list-style: none;
+    border: 1px dotted #aaa;
+    padding-right: 1.8rem;
+    background: rgb(255, 246, 223);
+    transition: background ease-out 2s, border ease-in 1s;
+}
+.custom-list:hover {
+    background: rgb(240, 252, 255);
+    border: 1px dotted #ff9494;
+}
+
+.see-btn:hover {
+    position: relative;
+    font-size: 1.2rem;
+}
+
+/*Default user image*/
+.fa-user {
+    font-size: 1.3rem;
+}
+
+/*Jumbotron*/
+.jumbotron li{
+    font-size: 1.6rem;
+}
+
+/*Mandatory input sign (*) */
+.is-required:after {
+    content: '*';
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
+}
+
+/*Error message*/
+.close {
+    background-color: transparent;
+}
+
+.close span {
+    font-family: "Comic Sans MS", "Comic Sans", "cursive";
+    color: rgb(58, 117, 123);
+}
+
+#message {
+    color: rgb(255, 0, 0);
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+/*Error page made by purplexmoss (https://freefrontend.com/html-css-404-page-templates/)*/
+.error {
+    background-color: #95c2de;
+}
+.mainbox {
+    background-color: #95c2de;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.err {
+    color: #ffffff;
+    font-size: 11rem;
+}
+.msg404 {
+    text-align: center;
+}
+.far {
+    font-size: 8.5rem;
+    color: #ffffff;
+}
+.err2 {
+    color: #ffffff;
+    font-size: 11rem;
+}
+.msg {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 1.7rem;
+}
+.errorlink {
+    color: white;
+}
+.errorlink:hover {
+    text-decoration: underline;
+}
+
+/*Términos y condiciones*/
+.terms p {
+    text-align: justify;
+    margin-bottom: 30px;
+}
+.terms h3 {
+    text-align: center;
+}
+.terms-title {
+    font-size: 24px;
+}
