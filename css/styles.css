@@ -150,6 +150,11 @@ thead {
     background-color:#444444;
 }
 
+#recipe-table {
+    overflow-y: scroll;
+    height: 300px;
+}
+
 .table_header {
     font-size: 1.4rem;
     color:#ffffff;

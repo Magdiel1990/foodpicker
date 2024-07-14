@@ -69,11 +69,11 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
     } else {
 ?>
     <div class="table-responsive-sm mt-4">
-        <table class="table table-condensed shadow">
+        <table class="table table-condensed shadow" id="recipe-table">
             <thead>
                 <tr class="table_header text-center">
                     <th scope="col">Receta</th>
-                    <th scope="col">Tiempo (min)</th>
+                    <th scope="col">Tiempo</th>
                     <th scope="col">Categoría</th>
                     <th scope="col">Acciones</th>
                 </tr>
