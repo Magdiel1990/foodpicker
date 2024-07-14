@@ -4,6 +4,27 @@ require_once ("views/partials/head.php");
 
 //Nav
 require_once ("views/partials/nav.php");
+
+//Array with the columns to show
+$columns = ["r.id", "r.name", "c.name as `category`", "r.url", "r.cookingtime"];
+$columns = implode(", ", $columns);
+
+//Condition for the search
+$where = "";
+//If there is a search
+if(isset($_POST["search"])){
+//Sanitizing the search
+$search = $conn -> real_escape_string($_POST["search"]);
+
+$where .= "WHERE r.name LIKE '%$search%' OR c.name LIKE '%$search%' OR r.cookingtime LIKE '%$search%' OR r.url LIKE '%$search%'";
+
+$sql = "";
+$sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";
+//If there is no search
+} else {
+    $sql = "";
+    $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";    
+}
 ?>
 
 <main class="container py-4">
@@ -20,7 +41,7 @@ require_once ("views/partials/nav.php");
 <!-- Table to show the recipes-->
 <?php
     //Counting the recipes  
-    $result = $conn -> query("SELECT r.id, r.name, c.name as `category`, r.url, r.cookingtime FROM recipe as r join categories as c on r.categoryid = c.id;");
+    $result = $conn -> query($sql);
 
     if($result -> num_rows == 0){
         echo "<div class='alert alert-warning text-center' role='alert'>No hay recetas disponibles.</div>";
@@ -29,7 +50,7 @@ require_once ("views/partials/nav.php");
     <!--Form for filtering the recipes-->
     <div class="row mt-2 g-2 justify-content-center">
         <div class="col-auto">
-            <form action="<?php echo root . "search"?>" method="POST" class="input-group mb-3">
+            <form action="" method="POST" class="input-group mb-3">
                 <input class="form-control" type="text" id="search" name="search" maxlength="100" autofocus> 
                 <input type="submit" class="btn btn-primary" value="Buscar">
             </form>
