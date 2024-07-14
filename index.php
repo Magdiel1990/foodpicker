@@ -23,8 +23,7 @@ if($param == "") {
     root. "not-found" => "controllers/notfound.controller.php",
     root. "settings" => "controllers/settings.controller.php",
     root. "update" => "controllers/update.controller.php",
-    root. "diet" => "controllers/diet.controller.php",
-    root. "search" => "controllers/search.controller.php",  
+    root. "diet" => "controllers/diet.controller.php"
     ];
 //It comes with parameters
 } else {
