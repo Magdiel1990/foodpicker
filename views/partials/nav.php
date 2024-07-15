@@ -19,6 +19,9 @@
                 <li class="nav-item">                    
                     <a class="nav-link text-white" href="<?php echo root;?>custom-exclusive" title="Elegir por ingredientes">Excluir</a>
                 </li>
+                <li class="nav-item">                    
+                    <a class="nav-link text-white" href="<?php echo root. "diet";?>" title="Elegir dieta">Dieta</a>
+                </li>
                 <li id="dropdownbtn" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa-solid fa-gears text-white"></i>
@@ -27,7 +30,6 @@
                         <a class="dropdown-item" href="<?php echo root;?>ingredients" title="Ingredientes">Ingredientes</a>
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
-                        <a class="dropdown-item" href="<?php echo root. "diet";?>">Dieta</a>
                     </div>
                 </li>            
             </ul>
