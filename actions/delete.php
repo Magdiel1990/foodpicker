@@ -154,36 +154,30 @@ if(isset($_GET['customid']) && isset($_GET['uri'])) {
 /*****************************************DIET DELETION CODE*************************************/
 /************************************************************************************************/
 
-if(isset($_GET['dietid']) && isset($_GET['username'])) {
+if(isset($_GET['dietid'])) {
     $dietid = $_GET['dietid'];
-    $username = $_GET['username'];
 
-    if($dietid == "" || $username == "") {
+    if($dietid == "") {
         header('Location: ' . root . 'error404');
         exit;
     }
 
-    $result = $conn -> query("SELECT dietname FROM diet WHERE id = '$dietid' AND username = '$username';");
+    $result = $conn -> query("SELECT name FROM diet WHERE id = '$dietid';");
 
     if($result -> num_rows > 0) {
 //Diet name
         $row = $result -> fetch_assoc();
-        $dietname = $row['dietname'];
 
-        $result = $conn -> query("UPDATE diet SET state = 0 WHERE id = '$dietid';");
+        $result = $conn -> query("DELETE FROM diet WHERE id = '$dietid';");
         if($result) {
-//Notification message        
-            $log_message = "Has eliminado la dieta \"" . $dietname . "\".";       
-            $type = "diet";
-//Verify if notifications are on
-            if($_SESSION['notification'] == 1) {
-                $conn -> query("INSERT INTO `log` (username, log_message, type, state) VALUES ('" . $_SESSION["username"] . "', '$log_message', '$type', 0);");
-            }
-
-            $conn -> query("INSERT INTO recycle (name, type, username, elementid) VALUES ('$dietname', 'dieta', '" . $_SESSION['username'] . "', '$dietid');");
-            
             $_SESSION['message'] = '¡Dieta eliminada!';
             $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'diet');
+            exit;
+        } else {
+            $_SESSION['message'] = '¡Error al eliminar dieta!';
+            $_SESSION['message_alert'] = "danger";
 
             header('Location: ' . root . 'diet');
             exit;

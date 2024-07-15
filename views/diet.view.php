@@ -194,7 +194,7 @@ $_SESSION["lastcheck"] = 3;
     ?> 
     <div class="table-responsive my-3 px-2">         
         <div class="row">
-            <h3 class="text-center"><a class="text-warning" href='<?php echo root . "delete?dietid=" . $id . "&username=" . $_SESSION['username']; ?>' title='Eliminar'>Dieta <?php echo $dietname;?></a></h3>
+            <h3 class="text-center"><a class="text-warning" href='<?php echo root . "delete?dietid=" . $id;?>' title='Eliminar'>Dieta <?php echo $dietname;?></a></h3>
             <table class="table table-bordered">
                 <thead class="text-light text-center">       
                     <tr>
