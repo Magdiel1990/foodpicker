@@ -23,7 +23,8 @@ if($param == "") {
     root. "not-found" => "controllers/notfound.controller.php",
     root. "settings" => "controllers/settings.controller.php",
     root. "update" => "controllers/update.controller.php",
-    root. "diet" => "controllers/diet.controller.php"
+    root. "diet" => "controllers/diet.controller.php",
+    root. "reset" => "controllers/reset.controller.php"  
     ];
 //It comes with parameters
 } else {
@@ -33,7 +34,7 @@ if($param == "") {
     root. "delete" => "controllers/delete.controller.php",
     root. "edit" => "controllers/edit.controller.php",
     root. "create" => "controllers/create.controller.php",
-    root. "update" => "controllers/update.controller.php"        
+    root. "update" => "controllers/update.controller.php"           
     ];
 }
 

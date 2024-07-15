@@ -30,6 +30,10 @@
                         <a class="dropdown-item" href="<?php echo root;?>ingredients" title="Ingredientes">Ingredientes</a>
                         <a class="dropdown-item" href="<?php echo root;?>add-recipe" title="Recetas">Recetas</a>
                         <a class="dropdown-item" href="<?php echo root;?>categories" title="Categorías">Categorías</a>
+                        <form action="<?php echo root;?>reset" method="POST">
+                            <input type="hidden" name="reset" value="1">
+                            <input class="dropdown-item reset" value="Reset" type="submit" title="Reset">
+                        </form>
                     </div>
                 </li>            
             </ul>
@@ -37,16 +41,16 @@
     </nav>
 </header>
  <script>
-deleteMessage("logout");  
+resetMessage("reset"); 
 hoverMenu();
 
 //Delete message
-function deleteMessage(button){
+function resetMessage(button){
 var deleteButtons = document.getElementsByClassName(button);
 
     for(var i = 0; i<deleteButtons.length; i++) {
         deleteButtons[i].addEventListener("click", function(event){    
-            if(confirm("¿Desea salir?")) {
+            if(confirm("¿Desea hacer reset?")) {
                 return true;
             } else {
                 event.preventDefault();
