@@ -68,8 +68,8 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
         echo "<div class='alert alert-warning text-center' role='alert'>No hay recetas disponibles.</div>";
     } else {
 ?>
-    <div class="table-responsive-sm mt-4">
-        <table class="table table-condensed shadow" id="recipe-table">
+    <div class="table-responsive-sm mt-4"  id="recipe-table">
+        <table class="table table-condensed shadow">
             <thead>
                 <tr class="table_header text-center">
                     <th scope="col">Receta</th>
