@@ -21,7 +21,11 @@ $_SESSION['search'] = $search;
 //Setting the focus
 $_SESSION['focus'] = ""; 
 
-$where .= "WHERE r.name LIKE '%$search' OR c.name LIKE '%$search' OR r.cookingtime LIKE '%$search' OR r.url LIKE '%$search'";
+//Lowering the search
+$search = strtolower($search);
+
+//Setting the condition
+$where .= "WHERE r.name LIKE '%$search%' OR c.name LIKE '%$search%' OR r.cookingtime LIKE '%$search%' OR r.url LIKE '%$search%'";
 
 $sql = "";
 $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";
