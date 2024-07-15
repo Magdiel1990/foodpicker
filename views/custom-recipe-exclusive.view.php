@@ -95,7 +95,7 @@ require_once ("views/partials/nav.php");
                 $counter = 0;
                 //Checking if the ingredients are in the recipe
                 for ($i = 0; $i < count($ingArray); $i++) {
-                    if(strtolower(strpos($row["ingredients"], $ingArray[$i])) == false) {
+                    if(strpos(strtolower($row["ingredients"]), $ingArray[$i]) == false) {
                         $counter += 1;
                     }
                 }
