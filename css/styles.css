@@ -45,7 +45,7 @@ footer h5 {
     transition: font-size linear 0.2s;
 }
 .fa-linkedin:hover, .fa-github:hover, .fa-instagram:hover, .fa-facebook-f:hover {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 /*Nav format*/
@@ -97,7 +97,7 @@ footer h5 {
 }
 
 .navbar-collapse .nav-item:hover, .navbar-collapse .dropdown-item:hover {
-    font-size: 18px;
+    font-size: 16px;
     background: rgba(83, 244, 104, 0.12); 
     border: 1px dotted rgba(0, 0, 255, 0.3);  
 }
@@ -123,27 +123,6 @@ footer h5 {
     font-weight: bolder;
 }
 
-#username {
-    font-weight: bolder;
-}
-
-#username:hover {
-    font-size: 1.2rem;
-}
-
-.logout {
-    font-size: 1.1rem;
-    transition: color ease-in 0.5s, font-size ease-out 0.5s;
-}
-
-.logout i:hover {
-    color: #444;
-    font-size: 1.3rem;
-}
-
-.fa-envelope {
-    font-size: 1.6rem;
-}
 
 /*Tables*/
 thead {
@@ -177,7 +156,7 @@ tbody {
 }
 
 #tlink:hover, .diet-elements td a:hover {
-    font-size: 2rem;
+    font-size: 1.3rem;
 }
 
 .diet-elements td:hover {
@@ -223,7 +202,7 @@ option {
 }
   
 .click-del-link:hover {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color:rgb(249, 43, 43);
 }
 .custom-list {

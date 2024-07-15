@@ -36,7 +36,7 @@ $_SESSION["lastcheck"] = 3;
 
     $limit = "LIMIT " . $totalRecipe;
 
-    $result = $conn -> query("SELECT r.recipename, r.recipeid FROM recipe r JOIN categories c ON r.categoryid = c.categoryid WHERE username = '" . $_SESSION['username'] . "' AND r.state = 1 AND c.state = 1 ORDER BY rand() $limit;"); 
+    $result = $conn -> query("SELECT name, url FROM recipe ORDER BY rand() $limit;"); 
 ?>
 <!-- Table with the diets-->
     <div class="d-flex flex-column-reverse p-2">  
@@ -55,25 +55,38 @@ $_SESSION["lastcheck"] = 3;
                 <?php
 //Users recipes                     
                     $recipes = [];
-                    while($row = $result -> fetch_array()) {
-                        $recipes[] = $row [0]; 
+
+                    while($row = $result -> fetch_assoc()) {
+                        $recipe = [
+                            'nombre' => $row['name'],
+                            'url' => $row['url']
+                        ];
+
+                        $recipes [] = $recipe;
                     }
+
 //Amount of recipes demanded are higher than the recipes availables                        
                     if(count($recipes) < $totalRecipe) {
                         $excess = $totalRecipe - count($recipes);
-//New array with some of the recipes already added
-                        $newArray = array_slice($recipes,0,$excess);               
+//New array with some of the recipes already added until completing the target
+                        $newArray = [];
+                        
+                        while(count($newArray) < $excess) {
+                            $newArray [] = $recipes [rand(0, count($recipes) - 1)];
+                        }
+
 //Completing the array so it can have the amount demanded
                         $recipes = array_merge($recipes, $newArray);
                     }
+
 //Recipes chunks
                     $recipes = (array_chunk($recipes, $dayCount));
-            
+
                     for($i = 0; $i < count($recipes); $i++) {
-                        echo "<tr class='diet-elements'>";
-                        for($j = 0; $j < count($recipes[$i]); $j++) {
-                            echo "<td><a href='recipes?recipe=" . $recipes [$i][$j] . "&username=" . $_SESSION['username']. "'>" . $recipes [$i][$j] . "</a></td>";
-                        } 
+                        echo "<tr class='diet-elements'>";     
+                        for($j = 0; $j < count($recipes [$i]); $j++) {              
+                            echo "<td><a href='" . $recipes [$i][$j]["url"] . "'>" . $recipes [$i][$j]["nombre"] . "</a></td>";
+                        }
                         echo "</tr>"; 
                     }
 
@@ -87,13 +100,13 @@ $_SESSION["lastcheck"] = 3;
                         $recipesDaysNames [] = $daysNames[$i];
 //The recipes are added
                         for($j = 0; $j < $amount; $j++) {                            
-                            array_push($recipesDaysNames, $recipes [$j][$i]);                         
+                            array_push($recipesDaysNames, $recipes [$j][$i]["nombre"]);                         
                         }
 //Each resulted array is added to the main one
                         $daysRecipes [] = $recipesDaysNames;
-                    }                    
+                    }                 
                     
-//Getting nonly the days
+//Getting only the days
                     $days = [];
 
                     for($i = 0; $i < count($daysRecipes); $i++) {
@@ -142,6 +155,7 @@ $_SESSION["lastcheck"] = 3;
 <?php
     }
 ?>
+<!--Form for the amount of meals a day-->
     <div class="row p-4 text-center justify-content-center">
         <form class="col-sm-8 col-md-9 col-lg-8 col-xl-8" method="POST" action="<?php echo root;?>diet" id="recipesPerDay">
             <h3 class="mb-3">Comidas</h3>
@@ -163,7 +177,7 @@ $_SESSION["lastcheck"] = 3;
         </form>
     </div>
     <?php
-    $resultDiet = $conn -> query ("SELECT id, dietname FROM diet WHERE username = '" . $_SESSION["username"] . "' AND state = 1 ORDER BY dietname;");
+    $resultDiet = $conn -> query ("SELECT id, dietname FROM diet ORDER BY dietname;");
     $num_rows = $resultDiet -> num_rows;   
 
     if($num_rows > 0) { 
@@ -223,7 +237,7 @@ $_SESSION["lastcheck"] = 3;
     }
     ?>
 </main>
-<script>
+<!--<script>
 diet_validation();
 
 //Diet addition validation method              
@@ -256,7 +270,7 @@ diet_validation();
             return true;                           
         })
     }
-</script>
+</script>-->
 <?php
 require_once ("views/partials/footer.php");
 
