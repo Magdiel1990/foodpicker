@@ -217,7 +217,15 @@ $_SESSION["lastcheck"] = 3;
                     for($i = 0; $i < count($recipes[$i]); $i++) {
                         echo "<tr class='diet-elements'>";
                         for($j = 0; $j < count($recipes); $j++) {
-                            echo "<td><a href=''>" . $recipes [$j][$i] . "</a></td>";
+                            $sql = "SELECT url FROM recipe WHERE name = '" . $recipes [$j][$i] . "';";
+                            $result = $conn -> query($sql);
+                            $row = $result -> fetch_assoc();
+
+                            if($row) {
+                                echo "<td><a href='" . $row["url"] . "'>" . $recipes [$j][$i] . "</a></td>";
+                            } else {
+                                echo "<td>" . $recipes [$j][$i] . "</td>";
+                            }
                         } 
                         echo "</tr>"; 
                     }
