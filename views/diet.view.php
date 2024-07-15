@@ -157,7 +157,7 @@ $_SESSION["lastcheck"] = 3;
 //Verify if there are recipes
     $recipesAccount = new TotalRecipes();
     $recipesAccount = $recipesAccount -> total();
-
+//If there are no recipes
     if($recipesAccount == 0) {
         echo "<div class='text-center mt-4 p-4'>";
         echo "<div class='alert alert-warning' role='alert'>No hay recetas disponibles.</div>"; 

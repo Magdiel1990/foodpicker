@@ -28,6 +28,15 @@ if(isset($_POST["recipename"]) && isset($_POST["url"]) && isset($_POST['category
   $categoryId = $_POST['category']; 
   $Url = $_POST["url"]; 
 
+  //Checking if the category is selected
+  if($categoryId == 0) {
+    $_SESSION['message'] = '¡Seleccione una categoría!';
+    $_SESSION['message_alert'] = "danger";
+
+    header('Location: ' . root . 'add-recipe');
+    exit;
+  }
+
   //Getting the category name
   $categoryName = new FromIdToName($categoryId, "categories");
   $categoryName = $categoryName -> name();

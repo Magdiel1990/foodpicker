@@ -44,7 +44,7 @@ require_once ("views/partials/nav.php");
                 </div> 
 
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="category">Categoría: </label>                
+                    <label class="input-group-text is-required" for="category">Categoría: </label>                
                     <select class="form-select" name="category" id="category">
                         <?php
                         //Checking if the session is set
@@ -62,6 +62,9 @@ require_once ("views/partials/nav.php");
                                 while($row = $result -> fetch_assoc()) {
                                     echo '<option value="' . $row["id"] . '">' . ucfirst($row["name"]) . '</option>';
                                 }
+                            //If there are no categories
+                            } else {
+                                echo '<option value="0">No hay categorías</option>';
                             }
                         ?>
                     </select>
