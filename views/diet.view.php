@@ -17,7 +17,7 @@ $_SESSION["lastcheck"] = 3;
     }
 
 ?>
-<main class="container p-4">
+<main class="container-fluid p-4">
 
 <?php
     if(isset($_POST["generate"])) {   
