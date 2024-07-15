@@ -11,6 +11,10 @@ $columns = implode(", ", $columns);
 
 //Condition for the search
 $where = "";
+
+//Order by
+$orderby = "ORDER BY r.name ASC";
+
 //If there is a search
 if(isset($_POST["search"])){
 //Sanitizing the search
@@ -27,8 +31,9 @@ $search = strtolower($search);
 //Setting the condition
 $where .= "WHERE r.name LIKE '%$search%' OR c.name LIKE '%$search%' OR r.cookingtime LIKE '%$search%' OR r.url LIKE '%$search%'";
 
+//Query
 $sql = "";
-$sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";
+$sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where $orderby;";
 //If there is no search
 } else {
     //If there is a session search
@@ -37,7 +42,7 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
     $_SESSION['focus'] = "autofocus";         
 
     $sql = "";
-    $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where;";    
+    $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid = c.id $where $orderby;";    
 }
 ?>
 
