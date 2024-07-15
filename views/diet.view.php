@@ -177,7 +177,7 @@ $_SESSION["lastcheck"] = 3;
         </form>
     </div>
     <?php
-    $resultDiet = $conn -> query ("SELECT id, dietname FROM diet ORDER BY dietname;");
+    $resultDiet = $conn -> query ("SELECT id, name FROM diet ORDER BY name;");
     $num_rows = $resultDiet -> num_rows;   
 
     if($num_rows > 0) { 
