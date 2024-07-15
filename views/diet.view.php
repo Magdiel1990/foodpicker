@@ -154,6 +154,16 @@ $_SESSION["lastcheck"] = 3;
     </div>
 <?php
     }
+//Verify if there are recipes
+    $recipesAccount = new TotalRecipes();
+    $recipesAccount = $recipesAccount -> total();
+
+    if($recipesAccount == 0) {
+        echo "<div class='text-center mt-4 p-4'>";
+        echo "<div class='alert alert-warning' role='alert'>No hay recetas disponibles.</div>"; 
+        echo "<a class='btn btn-primary' href='" . root . "add-recipe' title='Agregar receta'>Agregar</a>";
+        echo "</div>";
+    } else {
 ?>
 <!--Form for the amount of meals a day-->
     <div class="row p-4 text-center justify-content-center">
@@ -243,6 +253,7 @@ $_SESSION["lastcheck"] = 3;
     </div>
     <?php
     }
+}
     ?>
 </main>
 <!--<script>
