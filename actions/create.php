@@ -206,24 +206,8 @@ $dietName = $filter -> sanitization();
 $data = $_POST['data'];
 $days = $_POST['days'];
 
-//Input validation object  
-$inputs = ["El nombre de dieta" => [$dietName, [2,30], "incorrecto", true], 
-"Los datos" => [$data, [], "incorrectos", false],
-"Los días" => [$days, [], "incorrectos", false]]; 
-
-$message = new InputValidation ($inputs, "/[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]/");  
-$message = $message -> lengthValidation();
-
-  if(count($message) > 0) {
-    $_SESSION['message'] = $message [0];
-    $_SESSION['message_alert'] = $message [1];          
-
-    header('Location: ' . root . 'diet');
-    exit;
-  } 
-
 //Inserting the recipe name
-  $result = $conn -> query("INSERT INTO diet (dietname, username) VALUES ('$dietName', '". $_SESSION["username"]."');");
+  $result = $conn -> query("INSERT INTO diet (name) VALUES ('$dietName');");
 
   if($result) {
 //Getting the last id    
