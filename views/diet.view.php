@@ -147,7 +147,7 @@ $_SESSION["lastcheck"] = 3;
                         echo '<input type="hidden" name="data[]" value = "' . $recipesString [$i] . '">';
                     }                    
                 ?>                         
-                <input class="form-control mb-3" type="text" name="diet" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="40" minlength="7" id="diet_name" placeholder="Escriba el nombre de la dieta" required autofocus>
+                <input class="form-control mb-3" type="text" name="diet" pattern="[a-zA-Z áéíóúÁÉÍÓÚñÑ,;:]+" maxlength="40" minlength="4" id="diet_name" placeholder="Escriba el nombre de la dieta" required autofocus>
                 <input class="btn btn-primary" type="submit" value="Agregar" title="Generar">
             </form>
         </div>
@@ -188,9 +188,9 @@ $_SESSION["lastcheck"] = 3;
     <?php
         while ($row = $resultDiet -> fetch_assoc()) {
             $id = $row["id"];
-            $dietname = $row["dietname"];
+            $dietname = $row["name"];
 
-            $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE d.username = '" . $_SESSION["username"] . "' AND dd.dietid = '$id' AND d.state = 1;"); 
+            $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE dd.dietid = '$id';"); 
     ?> 
     <div class="table-responsive my-4">         
         <div class="row">
@@ -207,7 +207,7 @@ $_SESSION["lastcheck"] = 3;
                 </thead>
                 <tbody>
                 <?php       
-                    $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id, d.dietname FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE d.username = '" . $_SESSION["username"] . "' AND dd.dietid = '$id' AND d.state = 1;"); 
+                    $result = $conn -> query ("SELECT dd.recipes, dd.day, d.id, d.name FROM diet AS d JOIN diet_details AS dd ON dd.dietid = d.id WHERE dd.dietid = '$id';"); 
                     $recipes = [];
 //List of days                    
                     while ($row = $result -> fetch_assoc()) {
@@ -217,7 +217,7 @@ $_SESSION["lastcheck"] = 3;
                     for($i = 0; $i < count($recipes[$i]); $i++) {
                         echo "<tr class='diet-elements'>";
                         for($j = 0; $j < count($recipes); $j++) {
-                            echo "<td><a href='recipes?recipe=" . $recipes [$j][$i] . "&username=" . $_SESSION['username']. "'>" . $recipes [$j][$i] . "</a></td>";
+                            echo "<td><a href=''>" . $recipes [$j][$i] . "</a></td>";
                         } 
                         echo "</tr>"; 
                     }
