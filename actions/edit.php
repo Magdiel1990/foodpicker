@@ -287,10 +287,4 @@ $conn -> close();
 
 //Footer of the page.
 require_once ("views/partials/footer.php");
-
-//Verify that data comes
-if(empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}
 ?>

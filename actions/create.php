@@ -259,10 +259,4 @@ $message = $message -> lengthValidation();
 
 //Exiting db connection.
 $conn -> close(); 
-
-//Verify that data comes
-if(empty($_POST) || empty($_GET)) {
-    header('Location: ' . root);
-    exit;  
-}
 ?>
