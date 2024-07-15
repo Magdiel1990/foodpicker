@@ -200,45 +200,51 @@ if(isset($_POST['customid']) && isset($_POST['uri'])){
 
 if (isset($_POST['data']) && isset($_POST['diet']) && isset($_POST['days'])) {
 
-$filter = new Filter ($_POST['diet'], FILTER_SANITIZE_STRING);
-$dietName = $filter -> sanitization();
+    $filter = new Filter($_POST['diet'], FILTER_SANITIZE_STRING);
+    $dietName = $filter->sanitization();
 
-$data = $_POST['data'];
-$days = $_POST['days'];
+    $data = $_POST['data'];
+    $days = $_POST['days'];
 
-//Inserting the recipe name
-  $result = $conn -> query("INSERT INTO diet (name) VALUES ('$dietName');");
+    // Iniciar transacción
+    $conn->begin_transaction();
 
-  if($result) {
-//Getting the last id    
-    $last_id = $conn->insert_id;
-//Declaring the multi query
-    $sql = "";
-//Inserting the recipes details
-    for($i = 0; $i < count($data); $i++) {
-      $sql .= "INSERT INTO diet_details (day, recipes, dietid) VALUES ('" . $days[$i]. "', '". $data[$i] ."', '$last_id');";
+    try {
+        // Insertar el nombre de la dieta
+        $result = $conn->query("INSERT INTO diet (name) VALUES ('$dietName');");
+
+        if ($result) {
+            // Obtener el último ID insertado
+            $last_id = $conn->insert_id;
+
+            // Preparar la inserción de los detalles de la dieta
+            $stmt = $conn->prepare("INSERT INTO diet_details (day, recipes, dietid) VALUES (?, ?, ?);");
+
+            // Insertar los detalles de la dieta
+            foreach ($data as $i => $recipe) {
+                $stmt->bind_param("ssi", $days[$i], $data[$i], $last_id);
+                $stmt->execute();
+            }
+
+            // Si todo fue bien, confirmar la transacción
+            $conn->commit();
+
+            $_SESSION['message'] = '¡Dieta agregada correctamente!';
+            $_SESSION['message_alert'] = "success";
+
+            header('Location: ' . root . 'diet');
+            exit();
+        }
+    } catch (Exception $e) {
+        // Si algo sale mal, revertir todas las operaciones
+        $conn->rollback();
+
+        $_SESSION['message'] = 'Error al agregar la dieta.';
+        $_SESSION['message_alert'] = "danger";
+
+        header('Location: ' . root . 'diet');
+        exit();
     }
-
-    if($conn -> multi_query($sql)) {
-      $_SESSION['message'] = '¡Dieta agregada correctamente!';
-      $_SESSION['message_alert'] = "success";
-
-      header('Location: ' . root . 'diet');
-      exit;
-    } else {
-      $_SESSION['message'] = '¡Error al agregar dieta!';
-      $_SESSION['message_alert'] = "danger";
-
-      header('Location: ' . root . 'diet');
-      exit;
-    }
-  } else {
-      $_SESSION['message'] = '¡Error al agregar dieta!';
-      $_SESSION['message_alert'] = "danger";
-
-      header('Location: ' . root . 'diet');
-      exit;
-  }
 }
 
 //Exiting db connection.
