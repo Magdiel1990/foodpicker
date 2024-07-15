@@ -41,5 +41,7 @@ if($param == "") {
 //If the uri exists the controllers is called
 if(array_key_exists($uri, $routes)) {
     require $routes[$uri];
-} 
+} else {
+    require "controllers/404.controller.php";
+}
 ?>
