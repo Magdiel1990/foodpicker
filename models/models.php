@@ -98,4 +98,22 @@ class FromIdToName {
         return $this -> getRow()['name'];
     }
 }
+
+//Get the total of recipes
+class TotalRecipes {
+    private function totalRecipes() {
+        $conn = DatabaseConnection::dbConnection();
+        $sql = "SELECT COUNT(*) as total FROM recipe;";
+
+        return $conn -> query($sql);
+    }
+
+    private function getRow() {
+        return $this -> totalRecipes() -> fetch_assoc();
+    }
+
+    public function total() {
+        return $this -> getRow()['total'];
+    }
+}
 ?>

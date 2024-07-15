@@ -68,10 +68,18 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
     //Counting the recipes  
     $result = $conn -> query($sql);
 
-    if($result -> num_rows == 0){
+    //Results of the search
+    $subtotal = $result -> num_rows;
+
+    //Total of recipes
+    $total = new TotalRecipes();
+    $total = $total -> total();
+
+    if($subtotal == 0){
         echo "<div class='alert alert-warning text-center' role='alert'>No hay recetas disponibles.</div>";
     } else {
-?>
+?>  
+<!--Table-->
     <div class="table-responsive-sm mt-4"  id="recipe-table">
         <table class="table table-condensed shadow">
             <thead>
@@ -101,10 +109,16 @@ $sql .= "SELECT $columns FROM recipe as r join categories as c on r.categoryid =
                 ?>
             </tbody>
         </table>
-    </div>
+    </div>    
 <?php
     }
 ?>
+<!--Showing the account of recipes-->
+    <div class="row">
+        <div class="col-auto">
+            <p class="text-center">Mostrando <?php echo $subtotal; ?> de <?php echo $total; ?> recetas.</p>
+        </div>
+    </div>
 </main>
 <!-- Ajax script-->
 <script>
