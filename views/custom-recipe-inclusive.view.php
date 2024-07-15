@@ -109,14 +109,14 @@ require_once ("views/partials/nav.php");
         } else {
             $html = "<h3 class='text-center'>Recetas</h3>";
             $html .= "<div class='col-auto'>";
-            $html .= "<ul class='custom-list'>";
+            $html .= "<ul class='custom-list' id='recipe-table'>";
             for($i = 0; $i < count($recipes); $i++) {
                 //Getting the recipe name
-                $result = $conn -> query("SELECT name FROM recipe WHERE id = " . $recipes[$i] . ";");
+                $result = $conn -> query("SELECT name, url FROM recipe WHERE id = " . $recipes[$i] . ";");
                 $row = $result -> fetch_assoc();
                 //Displaying the recipe name
                 $html .= "<li>";
-                $html .= ucfirst($row["name"]);
+                $html .= "<a href='". $row["url"] . "'>" . ucfirst($row["name"]) . "</a>";;
                 $html .= "</li>";
             }
             $html .= "</ul>";
