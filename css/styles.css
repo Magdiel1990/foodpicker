@@ -23,6 +23,10 @@ h3 {
     font-weight: bold;
 }
 
+h3 a {
+    font-size: 1.5rem;
+}
+
 /*Header, footer and main format*/
 header, footer {
     background: rgb(71, 216, 241);
@@ -153,10 +157,6 @@ tbody {
 #tlink, .diet-elements td a, td a {
     color: #222;
     transition: font-size ease-out 0.2s;
-}
-
-#tlink:hover, .diet-elements td a:hover {
-    font-size: 1.3rem;
 }
 
 .diet-elements td:hover {
