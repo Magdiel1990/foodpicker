@@ -329,6 +329,8 @@ class CustomRecipeClass {
         $conn = DatabaseConnection::dbConnection();
         $result = $conn -> query("SELECT i.name as `ingredient`, il.ingredientid as `id` FROM inglook as il join ingredients as i on il.ingredientid = i.id;");
 
+        $ingArray = [];
+
         if($result -> num_rows > 0){
             $html = "<div class='col-auto'>";
             $html .= "<ul class='custom-list'>";
@@ -346,7 +348,8 @@ class CustomRecipeClass {
             echo $html;           
         } else {
             echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
-        }
+        }    
+        
         return $ingArray;
     }
 
@@ -375,9 +378,9 @@ class CustomRecipeClass {
                 if($counter == count($ingArray)) {
                     $recipes[] = $row["id"];
                 }
-            }       
-        }
-        return $recipes;
+            }   
+            return $recipes;    
+        }   
     }
 
     public function recipesDisplay() {
