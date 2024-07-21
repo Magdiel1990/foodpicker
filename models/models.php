@@ -292,10 +292,12 @@ class IngredientsData {
 class CustomRecipeClass {
     public $result;
     public $page;
+    public $flag;
 
-    function __construct($result, $page){
+    function __construct($result, $page, $flag){
         $this -> result = $result;
         $this -> page = $page;
+        $this -> flag = $flag;
     }
 
     public function ingredientsDropdownSelection() {
@@ -365,7 +367,7 @@ class CustomRecipeClass {
                 $counter = 0;
                 //Checking if the ingredients are in the recipe
                 for ($i = 0; $i < count($ingArray); $i++) {
-                    if(strpos(strtolower($row["ingredients"]), $ingArray[$i]) == false) {
+                    if(strpos(strtolower($row["ingredients"]), $ingArray[$i]) == $this -> flag) {
                         $counter += 1;
                     }
                 }

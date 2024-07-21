@@ -30,7 +30,7 @@ require_once ("views/partials/nav.php");
                 $result = new IngredientsData (null);
                 $result = $result -> getIngredient();
 //Dropdown of the ingredients
-                $customRecipeClass = new CustomRecipeClass ($result, "custom-exclusive");
+                $customRecipeClass = new CustomRecipeClass ($result, "custom-exclusive", false);
                 $ingredientsDropdown = $customRecipeClass -> ingredientsDropdownSelection();               
                 ?> 
             </div>
