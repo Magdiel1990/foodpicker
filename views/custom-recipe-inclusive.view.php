@@ -111,12 +111,13 @@ require_once ("views/partials/nav.php");
             $html .= "<div class='col-auto'>";
             $html .= "<ul class='custom-list' id='recipe-table'>";
             for($i = 0; $i < count($recipes); $i++) {
-                //Getting the recipe name
-                $result = $conn -> query("SELECT name, url FROM recipe WHERE id = " . $recipes[$i] . ";");
-                $row = $result -> fetch_assoc();
+                //Getting an array of the recipe data
+                $recipeData= new RecipesData($recipes[$i]);
+                $recipeData = $recipeData -> getRecipeData();
+
                 //Displaying the recipe name
                 $html .= "<li>";
-                $html .= "<a href='". $row["url"] . "'>" . ucfirst($row["name"]) . "</a>";;
+                $html .= "<a href='". $recipeData["url"] . "'>" . ucfirst($recipeData["name"]) . "</a>";;
                 $html .= "</li>";
             }
             $html .= "</ul>";

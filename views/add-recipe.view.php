@@ -57,7 +57,9 @@ require_once ("views/partials/nav.php");
                             $where = "";
                         }
                         //Getting the categories
-                            $result = $conn -> query("SELECT * FROM categories $where;"); 
+                            $result = new CategoriesData (null);
+                            $result = $result -> getCategory();
+                            
                             if($result -> num_rows > 0) {
                                 while($row = $result -> fetch_assoc()) {
                                     echo '<option value="' . $row["id"] . '">' . ucfirst($row["name"]) . '</option>';

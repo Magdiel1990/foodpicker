@@ -34,7 +34,10 @@ require_once ("views/partials/nav.php");
 <!--Ingredients list-->      
     <div class="table-responsive-sm mt-4">
          <?php
-            $result = $conn -> query("SELECT * FROM ingredients ORDER BY name;"); 
+         //Getting the ingredients
+            $result = new IngredientsData (null);
+            $result = $result -> getIngredient();
+
             if($result -> num_rows > 0){
         ?>
         <table class="table table-sm table-hover shadow">

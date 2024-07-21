@@ -45,7 +45,9 @@ require_once ("views/partials/nav.php");
             </thead>
             <tbody>                
                 <?php
-                    $result = $conn -> query("SELECT * FROM categories ORDER BY name;");
+//Query to get the categories
+                    $result = new CategoriesData (null);
+                    $result = $result -> getCategory();
 
                     if($result -> num_rows > 0){
                         while($row = $result -> fetch_assoc()){

@@ -183,13 +183,15 @@ class RecipesData {
 class CategoriesData {
     public $id;
     public $flag;
+    public $order;
 
-    function __construct($id, $flag = true){
+    function __construct($id, $flag = true, $order = "asc"){
         $this -> id = $id;
         $this -> flag = $flag;
+        $this -> order = $order;
     }
 
-    private function getCategory() {
+    public function getCategory() {
         $conn = DatabaseConnection::dbConnection();
 
         if($this -> flag){
@@ -198,7 +200,18 @@ class CategoriesData {
             $where = "WHERE NOT id = '" . $this -> id . "'";
         }
 
-        $sql = "SELECT * FROM categories $where;";
+        if($this -> order == "asc"){
+            $order = "ORDER BY name ASC";
+        } else {
+            $order = "ORDER BY name DESC";
+        }
+
+        //If the id is null, the where clause is empty
+        if($this -> id == null){
+            $where = "";
+        }
+
+        $sql = "SELECT * FROM categories $where $order;";
 
         return $conn -> query($sql);
     }
@@ -212,14 +225,36 @@ class CategoriesData {
 //Get the ingredients data
 class IngredientsData {
     public $id;
+    public $flag;
+    public $order;
 
-    function __construct($id){
+    function __construct($id, $flag = true, $order = "asc"){
         $this -> id = $id;
+        $this -> flag = $flag;
+        $this -> order = $order;
     }
 
-    private function getIngredient() {
+    public function getIngredient() {
         $conn = DatabaseConnection::dbConnection();
-        $sql = "SELECT * FROM ingredients WHERE id = '" . $this -> id . "';";
+
+        if($this -> flag){
+            $where = "WHERE id = '" . $this -> id . "'";
+        } else {
+            $where = "WHERE NOT id = '" . $this -> id . "'";
+        }
+
+        if($this -> order == "asc"){
+            $order = "ORDER BY name ASC";
+        } else {
+            $order = "ORDER BY name DESC";
+        }
+
+        //If the id is null, the where clause is empty
+        if($this -> id == null){
+            $where = "";
+        }
+
+        $sql = "SELECT * FROM ingredients $where $order;";
 
         return $conn -> query($sql);
     }
