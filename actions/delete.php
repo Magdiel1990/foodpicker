@@ -127,7 +127,7 @@ if(isset($_GET['customid']) && isset($_GET['uri'])) {
     $uri = $_GET['uri'];
 
     //Check if it exists
-    $num_rows = new FromIdToName ($id, "inglook", "ingredientid");
+    $num_rows = new FromIdToId ($id, "inglook", "ingredientid");
     $num_rows = $num_rows -> rows();    
     
     if($num_rows > 0) {

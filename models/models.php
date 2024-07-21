@@ -127,6 +127,30 @@ class FromNameToIdVerifying {
     }
 }
 
+//Get the id from the id
+class FromIdToId {
+    public $id;
+    public $table;
+    public $idName;
+
+    function __construct($id, $table, $idName = "id"){
+        $this -> id = $id;
+        $this -> table = $table;
+        $this -> idName = $idName;
+    }
+    //Get the name
+    private function getName() {
+        $conn = DatabaseConnection::dbConnection();
+        $sql = "SELECT id FROM " . $this -> table . " WHERE " . $this -> idName . " = '" . $this -> id ."';";
+   
+        return $conn -> query($sql);
+    }
+
+    public function rows() {
+        return $this -> getName() -> num_rows;
+    }
+}
+
 //Get the total of recipes
 class TotalRecipes {
     private function totalRecipes() {
@@ -264,4 +288,123 @@ class IngredientsData {
         return $result -> fetch_assoc();
     }
 }
+
+class CustomRecipeClass {
+    public $result;
+    public $page;
+
+    function __construct($result, $page){
+        $this -> result = $result;
+        $this -> page = $page;
+    }
+
+    public function ingredientsDropdownSelection() {
+        if($this -> result -> num_rows > 0) {
+            $conn = DatabaseConnection::dbConnection();             
+           
+            if($this -> result -> num_rows > 0){
+            //Getting the ingredients
+                 $result = $conn -> query("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredientid FROM inglook);");
+
+                 echo "<select class='form-select' name='customid' id='customid' autofocus>";
+                 while($row = $result -> fetch_assoc()) {
+                     echo "<option value='" . $row['id'] . "'>" . ucfirst($row['name']) . "</option>";
+                 }
+                 echo "</select> ";
+                 echo '<input type="hidden" name="uri" value="' .  $this -> page . '">';
+                 echo '<input class="btn btn-primary" type="submit" value="Agregar"> ';
+           //If there are no ingredients added
+            } else {
+                echo "<div value=''></div>";
+            }                  
+        //If there is no ingredient added                
+        } else {
+            echo '<a class="btn btn-primary" href="<?php echo root;?>ingredients">Agregar</a>';
+        } 
+    }
+
+    public function ingredientsAddDisplay() {
+        $conn = DatabaseConnection::dbConnection();
+        $result = $conn -> query("SELECT i.name as `ingredient`, il.ingredientid as `id` FROM inglook as il join ingredients as i on il.ingredientid = i.id;");
+
+        if($result -> num_rows > 0){
+            $html = "<div class='col-auto'>";
+            $html .= "<ul class='custom-list'>";
+            while($row = $result -> fetch_assoc()) {
+                $html .= "<li>";
+                $html .= "<a href='" . root . "delete?customid=" . $row['id'] . "&uri=" . $this -> page . "' " . "title='Eliminar' class='click-del-link'>";
+                $html .= ucfirst($row["ingredient"]);
+                $html .= "</a>";
+                $html .= "</li>";
+                //Ingredients are added into an array                
+                $ingArray[] = $row["ingredient"];
+            }
+            $html .= "</ul>";
+            $html .= "</div>";     
+            echo $html;           
+        } else {
+            echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
+        }
+        return $ingArray;
+    }
+
+    private function recipesList() {
+        //Connection to the database
+        $conn = DatabaseConnection::dbConnection();
+        //Array containing the chosen ingredients
+        $ingArray = $this -> ingredientsAddDisplay();
+
+        //Array containing the chosen recipes        
+        if(isset($ingArray)){   
+            //Getting the recipes
+            $result = $conn -> query ("SELECT id, ingredients FROM recipe;");
+            //Recipes
+            $recipes = [];
+            while($row = $result -> fetch_assoc()) {
+                //Counter for the ingredients
+                $counter = 0;
+                //Checking if the ingredients are in the recipe
+                for ($i = 0; $i < count($ingArray); $i++) {
+                    if(strpos(strtolower($row["ingredients"]), $ingArray[$i]) == false) {
+                        $counter += 1;
+                    }
+                }
+                //If all the ingredients are in the recipe
+                if($counter == count($ingArray)) {
+                    $recipes[] = $row["id"];
+                }
+            }       
+        }
+        return $recipes;
+    }
+
+    public function recipesDisplay() {
+        //Getting the recipes
+        $recipes = $this -> recipesList();
+        //If there are no recipes
+        if(count($recipes) > 0){
+            $html = "<h3 class='text-center'>Recetas</h3>";
+            $html .= "<div class='col-auto'>";
+            $html .= "<ul class='custom-list' id='recipe-table'>";
+            for($i = 0; $i < count($recipes); $i++) {
+                //Getting an array of the recipe data
+                $recipeData= new RecipesData($recipes[$i]);
+                $recipeData = $recipeData -> getRecipeData();
+
+                //Displaying the recipe name
+                $html .= "<li>";
+                $html .= "<a href='". $recipeData["url"] . "'>" . ucfirst($recipeData["name"]) . "</a>";
+                $html .= "</li>";
+            }
+            $html .= "</ul>";
+            $html .= "</div>";     
+            echo $html;
+        } else {
+            echo "<p class='text-center'>No hay recetas con estos ingredientes...</p>";
+        }
+    }
+}
+
+
+
 ?>
