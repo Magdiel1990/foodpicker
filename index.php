@@ -19,9 +19,7 @@ if($param == "") {
     root. "ingredients" => "controllers/ingredients.controller.php",
     root. "add-recipe" => "controllers/add-recipe.controller.php",
     root. "categories" => "controllers/categories.controller.php",    
-    root. "error404" => "controllers/404.controller.php", 
-    root. "not-found" => "controllers/notfound.controller.php",
-    root. "settings" => "controllers/settings.controller.php",
+    root. "error404" => "controllers/404.controller.php",
     root. "update" => "controllers/update.controller.php",
     root. "diet" => "controllers/diet.controller.php",
     root. "reset" => "controllers/reset.controller.php"  
