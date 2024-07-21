@@ -89,9 +89,10 @@ if(isset($_POST['add_categories'])){
 //lowercase the variable
   $category = strtolower($category);
 //Check if the category had been added
-  $result = $conn -> query("SELECT id FROM categories WHERE name = '$categoryName';");
+  $num_rows = new FromNameToIdVerifying ($categoryName, "categories");
+  $num_rows = $num_rows -> rows();
 
-  if ($result -> num_rows > 0) {
+  if ($num_rows > 0) {
       $_SESSION['message'] = '¡Ya ha sido agregado!';
       $_SESSION['message_alert'] = "success";
 
@@ -130,8 +131,9 @@ if(isset($_POST['add_ingredient'])){
 //lowercase the variable
   $ingredient = strtolower($ingredient);
 
-  $result = $conn -> query("SELECT id FROM ingredients WHERE name = '$ingredient';");
-  $num_rows = $result -> num_rows;
+//Check if it already exists
+$num_rows = new FromNameToIdVerifying ($ingredient, "ingredients");
+$num_rows = $num_rows -> rows();
 
 //Check if it already exists
   if($num_rows != 0){
@@ -172,7 +174,7 @@ if(isset($_POST['customid']) && isset($_POST['uri'])){
   $ingredientId = $_POST['customid'];
   $uri = $_POST['uri'];
 
-  $result = $conn -> query("SELECT ingredientid FROM inglook WHERE ingredientid = '$ingredientId';");
+  $result = $conn -> query("SELECT id FROM inglook WHERE ingredientid = '$ingredientId';");
 //Check if the recipe has been added
   if($result -> num_rows > 0){
       $_SESSION['message'] = '¡Ya ha sido agregado!';

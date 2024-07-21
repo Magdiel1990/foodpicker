@@ -11,9 +11,11 @@ if(isset($_GET['recipeid'])){
 //Getting the id.
 $recipeId = $_GET['recipeid'];
 
-$result = $conn -> query("SELECT id FROM recipe WHERE id = '$recipeId';");
+//Check if it exists
+$num_rows = new FromIdToName ($recipeId, "recipe");
+$num_rows = $num_rows -> rows();
 
-    if($result -> num_rows > 0) {
+    if($num_rows > 0) {
         $result = $conn -> query("DELETE FROM recipe WHERE id = '$recipeId';");
 
         if($result) {            
@@ -45,10 +47,11 @@ if(isset($_GET['categoryid'])){
 //Category.
 $categoryId = $_GET['categoryid'];
 
-//Getting the id
-$result = $conn -> query("SELECT id FROM categories WHERE id = '$categoryId';");
+//Check if it exists
+$num_rows = new FromIdToName ($categoryId, "categories");
+$num_rows = $num_rows -> rows();
 
-    if($result -> num_rows > 0) {
+    if($num_rows > 0) {
         $result = $conn -> query("DELETE FROM categories WHERE id = '$categoryId';");
 
         if($result) {            
@@ -83,10 +86,11 @@ if(isset($_GET['ingredientid'])){
 //Ingredient
 $id = $_GET['ingredientid'];
 
-//Getting the id
-$result = $conn -> query("SELECT id FROM ingredients WHERE id = '$id';");
+//Check if it exists
+$num_rows = new FromIdToName ($id, "ingredients");
+$num_rows = $num_rows -> rows();
 
-    if($result -> num_rows > 0) {
+    if($num_rows > 0) {
         $result = $conn -> query("DELETE FROM ingredients WHERE id = '$id';");
 
         if($result) {            
@@ -122,10 +126,11 @@ if(isset($_GET['customid']) && isset($_GET['uri'])) {
     //Uri of the page
     $uri = $_GET['uri'];
 
-    //Getting the id
-    $result = $conn -> query("SELECT id FROM inglook WHERE ingredientid = '$id';");
+    //Check if it exists
+    $num_rows = new FromIdToName ($id, "inglook", "ingredientid");
+    $num_rows = $num_rows -> rows();    
     
-    if($result -> num_rows > 0) {
+    if($num_rows > 0) {
         $result = $conn -> query("DELETE FROM inglook WHERE ingredientid = '$id';");
 
         if($result) {            
@@ -162,9 +167,11 @@ if(isset($_GET['dietid'])) {
         exit;
     }
 
-    $result = $conn -> query("SELECT name FROM diet WHERE id = '$dietid';");
+    //Check if it already exists
+    $num_rows = new FromIdToName ($dietid, "diet");
+    $num_rows = $num_rows -> rows();
 
-    if($result -> num_rows > 0) {
+    if($num_rows > 0) {
 //Diet name
         $row = $result -> fetch_assoc();
 

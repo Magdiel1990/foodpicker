@@ -14,16 +14,9 @@ if(isset($_GET['recipeid'])) {
     $id = $_GET['recipeid'];  
     
     //Query to get the recipe data
-    $result = $conn -> query("SELECT r.name, r.ingredients, r.cookingtime, r.url, c.name as `category`, r.categoryid FROM recipe as r join categories as c on r.categoryid = c.id WHERE r.id = '$id';");
-    
-    $row = $result -> fetch_assoc();  
-    //Recipe data
-    $nombre = $row["name"];
-    $tiempo = $row["cookingtime"];       
-    $categoria = $row["category"];
-    $categoryId =   $row["categoryid"];
-    $ingredientes = $row["ingredients"];
-    $url = $row["url"];
+    $recipeData = new RecipesData ($id);
+    //Array with the recipe data
+    $recipeData = $recipeData -> getRecipeData();
     ?>
     <main class="container p-4">
     <?php
@@ -45,22 +38,22 @@ if(isset($_GET['recipeid'])) {
     
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="recipeName">Nombre: </label>
-                            <input type="text" name="recipeName" value="<?php echo $nombre;?>" class="form-control" id="recipeName" maxlength="100" minlength="7" required autofocus>
+                            <input type="text" name="recipeName" value="<?php echo $recipeData["name"];?>" class="form-control" id="recipeName" maxlength="100" minlength="7" required autofocus>
                         </div>
 
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="recipeTime">Tiempo: </label>
-                            <input type="number" name="recipeTime" value="<?php echo $tiempo;?>" class="form-control" min = 5 max = 200 id="recipeTime" required>
+                            <input type="number" name="recipeTime" value="<?php echo $recipeData["cookingtime"];?>" class="form-control" min = 5 max = 200 id="recipeTime" required>
                         </div>
 
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="newIngredients">Ingredientes: </label>
-                            <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="8" required><?php echo $ingredientes;?></textarea>
+                            <textarea class="form-control" name="ingredients" id="ingredients" cols="10" rows="8" required><?php echo $recipeData["ingredients"];?></textarea>
                         </div>
 
                         <div class="input-group mb-3">
                             <label class="input-group-text is-required" for="recipeUrl">URL: </label>
-                            <input type="text" name="recipeUrl" value="<?php echo $url;?>" class="form-control" id="recipeUrl" minlength="7" required>
+                            <input type="text" name="recipeUrl" value="<?php echo $recipeData["url"];?>" class="form-control" id="recipeUrl" minlength="7" required>
                         </div> 
 
                         <div class="row">
@@ -69,9 +62,11 @@ if(isset($_GET['recipeid'])) {
                                 <select class="form-select" name="category" id="category">                                    
                                     <?php      
                                     //Query to get the categories
-                                    $result = $conn -> query ("SELECT * FROM categories WHERE NOT  id = '$categoryId';");                            
+                                    $row = new CategoriesData ($categoryId, false);
+                                    $row = $row -> getCategoriesRow();
+                           
                                     //Showing the categories
-                                    echo '<option value="' . $categoryId . '">' .  ucfirst($categoria) . '</option>';                                    
+                                    echo '<option value="' . $recipeData["categoryid"] . '">' .  ucfirst($recipeData ["category"]) . '</option>';                                    
 
                                     while($row = $result -> fetch_assoc()) {
                                         echo '<option value="' . $row["id"]  . '">' . ucfirst($row["name"]) . '</option>';
@@ -105,8 +100,9 @@ if(isset($_GET['recipeid'])) {
 if(isset($_GET['categoryid'])){
 $categoryId = $_GET['categoryid'];
 
-$result = $conn -> query("SELECT * FROM categories WHERE id = '$categoryId';");
-$row = $result -> fetch_assoc();
+//Query to get the categories
+$row = new CategoriesData ($categoryId);
+$row = $row -> getCategoriesRow();
 
 //Category name
 $category = $row["name"];
@@ -209,10 +205,11 @@ $category = $row["name"];
 /************************************************************************************************/
 if(isset($_GET['ingredientid'])){
     $id = $_GET['ingredientid'];
-    
-    $result = $conn -> query("SELECT * FROM ingredients WHERE id = '$id';");
-    
-    $row = $result -> fetch_assoc();
+
+//Query to get the ingredients
+    $row = new IngredientsData ($id);
+    $row = $row -> getIngredientsRow();
+
     $ingredientName = $row["name"];
 ?>
 <main class="container p-4">
@@ -240,7 +237,7 @@ if(isset($_GET['ingredientid'])){
                     <a href= "<?php echo root;?>ingredients" class="btn btn-secondary">Regresar</a>
                 </div>
                 </form>
-                <script>
+     <!--           <script>
                 formValidation();   
                
 //Image format validation
@@ -274,7 +271,7 @@ if(isset($_GET['ingredientid'])){
                         return true;               
                     })
                 }
-                </script>    
+                </script>    -->
             </div>
        </div>                  
     </div>     

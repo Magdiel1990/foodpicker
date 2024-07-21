@@ -28,9 +28,10 @@ $newRecipeUrl = $filter -> sanitization();
 
 $categoryId = $_POST["category"];
 
-    $sql = "UPDATE recipe SET name = '$newRecipeName', cookingtime = '$newRecipeTime', ingredients = '$newIngredients', url = '$newRecipeUrl', categoryid = '$categoryId' WHERE id = '$id';";
+    $stmt = $conn -> prepare("UPDATE recipe SET name = ?, cookingtime = ?, ingredients = ?, url = ?, categoryid = ? WHERE id = ?;");
+    $stmt->bind_param("sissii", $newRecipeName, $newRecipeTime, $newIngredients, $newRecipeUrl, $categoryId, $id);
 
-    if ($conn -> query($sql)) {
+    if ($stmt -> execute()) {
         $_SESSION['message'] = '¡Receta editada con éxito!';
         $_SESSION['message_alert'] = "success";
 
@@ -101,9 +102,10 @@ $result = $conn -> query("SELECT id FROM categories WHERE id = '$categoryId';");
         header('Location: ' . root . 'categories');
         exit;  
     } else {
-        $sql = "UPDATE categories SET name = '$categoryName' WHERE id = '$categoryId';";
+        $stmt = $conn -> prepare("UPDATE categories SET name = ? WHERE id = ?;");
+        $stmt->bind_param("si", $categoryName, $categoryId);
 
-        if ($conn -> query($sql)) {
+        if ($stmt -> execute()) {
             $_SESSION['message'] = '¡Categoría editada con éxito!';
             $_SESSION['message_alert'] = "success";
 
