@@ -209,7 +209,7 @@ class CategoriesData {
     public $flag;
     public $order;
 
-    function __construct($id, $flag = true, $order = "asc"){
+    function __construct($id, $flag = true, $order = "asc"){ #If the flag is true, the id is included, if it's false, the id is excluded
         $this -> id = $id;
         $this -> flag = $flag;
         $this -> order = $order;
