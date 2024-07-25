@@ -294,7 +294,7 @@ class CustomRecipeClass {
     public $page;
     public $flag;
 
-    function __construct($result, $page, $flag){
+    function __construct($result, $page, $flag /* if it's true, the ingredients are added, if it's false, the ingredients are not added*/){
         $this -> result = $result;
         $this -> page = $page;
         $this -> flag = $flag;
@@ -346,10 +346,7 @@ class CustomRecipeClass {
             $html .= "</ul>";
             $html .= "</div>";     
             echo $html;           
-        } else {
-            echo "<p class='text-center'>Agregue los ingredientes para conseguir recetas...</p>";
-        }    
-        
+        }         
         return $ingArray;
     }
 
@@ -409,7 +406,4 @@ class CustomRecipeClass {
         }
     }
 }
-
-
-
 ?>
